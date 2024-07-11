@@ -21,7 +21,8 @@
         "@config": [ "config" ],
         "@database": [ "database" ],
         "@global": [ "global" ],
-        "@common": [ "common" ]
+        "@common": [ "common" ],
+        "@resolvers": [ "resolvers" ]
     }
   }
 }

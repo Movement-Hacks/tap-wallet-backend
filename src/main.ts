@@ -8,7 +8,7 @@ import { printSchema } from "graphql"
 import { promises as fsPromises } from "fs"
 import { GraphQLSchemaBuilderModule, GraphQLSchemaFactory } from "@nestjs/graphql"
 import { join } from "path"
-import { GameResolver } from "resolvers/game/game.controller"
+import { GameResolver } from "@resolvers"
 
 const generateSchema = async () => {
     const app = await NestFactory.create(GraphQLSchemaBuilderModule)
@@ -52,4 +52,5 @@ const bootstrap = async () => {
     
     await app.listen(appConfig().port || 9992)
 }
+
 generateSchema().then(() => bootstrap())
