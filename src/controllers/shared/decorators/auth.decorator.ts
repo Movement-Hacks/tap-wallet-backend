@@ -1,9 +1,9 @@
 import { AccountEntity } from "@database"
 import { createParamDecorator, ExecutionContext } from "@nestjs/common"
 
-export const MessageFromBody = createParamDecorator((_, ctx: ExecutionContext) => {
+export const PayloadFromBody = createParamDecorator((_, ctx: ExecutionContext) => {
     const request = ctx.switchToHttp().getRequest()
-    return request.body.message
+    return request.body.payload
 })
 
 export const Account = createParamDecorator(

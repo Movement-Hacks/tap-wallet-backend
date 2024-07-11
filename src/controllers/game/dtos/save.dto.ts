@@ -2,7 +2,7 @@ import { ApiProperty } from "@nestjs/swagger"
 import { IsHexadecimal, IsNumber, IsString } from "class-validator"
 import { BaseApiResponse, Signature } from "@common"
 
-export class SaveMessage {
+export class SavePayload {
   @ApiProperty({ default: 69 })
   @IsNumber()
       balance: number
@@ -12,14 +12,14 @@ export class SaveMessage {
       totalBonus: number
 }
 
-export class SaveRequestBody implements Signature<SaveMessage> {
+export class SaveRequestBody implements Signature<SavePayload> {
   @ApiProperty({
       default: {
           balance: 69,
           totalBonus: 96,
       },
   })
-      message: SaveMessage
+      payload: SavePayload
 
   @ApiProperty({
       default:

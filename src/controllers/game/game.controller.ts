@@ -5,9 +5,9 @@ import {
     ApiCreatedResponse,
     ApiTags,
 } from "@nestjs/swagger"
-import { SaveMessage, SaveRequestBody, SaveResponseData } from "./dtos"
+import { SavePayload, SaveRequestBody, SaveResponseData } from "./dtos"
 import { GameService } from "./game.service"
-import { MessageFromBody, Account, AuthInterceptor, AuthGuard } from "../shared"
+import { PayloadFromBody, Account, AuthInterceptor, AuthGuard } from "../shared"
 import { AccountEntity } from "@database"
 
 @ApiTags("Game")
@@ -27,9 +27,9 @@ export class GameController {
   @UseInterceptors(AuthInterceptor)
   @Post("save")
     async save(
-    @MessageFromBody() message: SaveMessage,
+    @PayloadFromBody() payload: SavePayload,
     @Account() account: AccountEntity,
     ) {
-        return this.gameService.save(message, account)
+        return this.gameService.save(payload, account)
     }
 }
