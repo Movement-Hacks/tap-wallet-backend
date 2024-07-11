@@ -5,6 +5,10 @@ import { appConfig, databaseConfig, jwtConfig, keysConfig } from "./config"
 import { GlobalModule } from "@global"
 import { ControllersModule } from "controllers/controllers.module"
 import { ThrottlerModule } from "@nestjs/throttler"
+import { ApolloServerPluginLandingPageLocalDefault } from "@apollo/server/plugin/landingPage/default"
+import { GraphQLModule } from "@nestjs/graphql"
+import { ApolloDriver, ApolloDriverConfig } from "@nestjs/apollo"
+import { ResolversModule } from "resolvers"
 
 @Module({
     imports: [
@@ -24,6 +28,14 @@ import { ThrottlerModule } from "@nestjs/throttler"
             synchronize: true,
         }),
 
+        GraphQLModule.forRoot<ApolloDriverConfig>({
+            driver: ApolloDriver,
+            typePaths: ["./**/*.gql"],
+            playground: false,
+            plugins: [ApolloServerPluginLandingPageLocalDefault()],
+            introspection: true,
+        }),
+
         ThrottlerModule.forRoot([{
             ttl: 60000,
             limit: 1000,
@@ -32,6 +44,7 @@ import { ThrottlerModule } from "@nestjs/throttler"
         GlobalModule,
 
         ControllersModule,
+        ResolversModule
     ],
     controllers: [],
     providers: [],

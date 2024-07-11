@@ -4,6 +4,29 @@ import { HttpsOptions } from "@nestjs/common/interfaces/external/https-options.i
 import { appConfig, keysConfig } from "@config"
 import { getEnvValue } from "@common"
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger"
+import { printSchema } from "graphql"
+import { promises as fsPromises } from "fs"
+import { GraphQLSchemaBuilderModule, GraphQLSchemaFactory } from "@nestjs/graphql"
+import { join } from "path"
+import { GameResolver } from "resolvers/game/game.controller"
+
+const generateSchema = async () => {
+    const app = await NestFactory.create(GraphQLSchemaBuilderModule)
+    await app.init()
+
+    const gqlSchemaFactory = app.get(GraphQLSchemaFactory)
+    const schema = await gqlSchemaFactory.create([
+        GameResolver
+    ])
+    
+    await fsPromises.writeFile(
+        join(
+            process.cwd(),
+            `${getEnvValue({ development: "src", production: "dist" })}/schema.gql`,
+        ),
+        printSchema(schema),
+    )
+}
 
 const bootstrap = async () => {
     const httpsOptions: HttpsOptions = getEnvValue({
@@ -29,4 +52,4 @@ const bootstrap = async () => {
     
     await app.listen(appConfig().port || 9992)
 }
-bootstrap()
+generateSchema().then(() => bootstrap())

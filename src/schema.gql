@@ -1,0 +1,34 @@
+type GameEntity {
+  gameId: ID!
+  balance: Int!
+  totalBonus: Float!
+  accountId: ID!
+  account: AccountEntity!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type AccountEntity {
+  accountId: ID!
+  address: String!
+  game: GameEntity!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type LoadResponseSchema {
+  game: GameEntity!
+}
+
+type Query {
+  load(input: LoadInput!): LoadResponseSchema!
+}
+
+input LoadInput {
+  address: String!
+}
