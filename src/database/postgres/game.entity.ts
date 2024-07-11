@@ -1,13 +1,15 @@
 import {
     Column,
+    CreateDateColumn,
     Entity,
     JoinColumn,
     OneToOne,
     PrimaryGeneratedColumn,
+    UpdateDateColumn,
 } from "typeorm"
 import { AccountEntity } from "./account.entity"
 
-@Entity()
+@Entity("game")
 export class GameEntity {
   @PrimaryGeneratedColumn("uuid")
       gameId: string
@@ -21,4 +23,10 @@ export class GameEntity {
   @OneToOne(() => AccountEntity, (account) => account.game)
   @JoinColumn({ name: "gameId" })
       account: AccountEntity
+
+  @CreateDateColumn()
+      createdAt: Date
+
+  @UpdateDateColumn()
+      updatedAt: Date
 }

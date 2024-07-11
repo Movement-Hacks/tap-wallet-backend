@@ -1,7 +1,14 @@
-import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from "typeorm"
+import {
+    Column,
+    CreateDateColumn,
+    Entity,
+    OneToOne,
+    PrimaryGeneratedColumn,
+    UpdateDateColumn,
+} from "typeorm"
 import { GameEntity } from "./game.entity"
 
-@Entity()
+@Entity("account")
 export class AccountEntity {
   @PrimaryGeneratedColumn("uuid")
       accountId: string
@@ -11,6 +18,12 @@ export class AccountEntity {
 
   @OneToOne(() => GameEntity, (game) => game.account)
       game: GameEntity
+
+  @CreateDateColumn()
+      createdAt: Date
+
+  @UpdateDateColumn()
+      updatedAt: Date
 }
 
 export type Payload = Partial<AccountEntity>;
