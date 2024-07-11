@@ -25,5 +25,3 @@ export class AccountEntity {
   @UpdateDateColumn()
       updatedAt: Date
 }
-
-export type Payload = Partial<AccountEntity>;

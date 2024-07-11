@@ -1,15 +1,14 @@
-import { Payload } from "@database"
+import { AccountEntity } from "@database"
 import { createParamDecorator, ExecutionContext } from "@nestjs/common"
 
-export const DataFromBody = createParamDecorator((_, ctx: ExecutionContext) => {
+export const MessageFromBody = createParamDecorator((_, ctx: ExecutionContext) => {
     const request = ctx.switchToHttp().getRequest()
-    return JSON.parse(request.body.data)
+    return request.body.message
 })
 
-export const AccountId = createParamDecorator(
-    (_, ctx: ExecutionContext): string => {
+export const Account = createParamDecorator(
+    (_, ctx: ExecutionContext): AccountEntity => {
         const request = ctx.switchToHttp().getRequest()
-        const { accountId } = request.user as Payload
-        return accountId
+        return request.account
     },
 )

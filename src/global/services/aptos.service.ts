@@ -3,9 +3,9 @@ import {
     AptosConfig,
     Ed25519PublicKey,
     Ed25519Signature,
-    Network
+    Network,
 } from "@aptos-labs/ts-sdk"
-import { BadRequestException, Injectable } from "@nestjs/common"
+import { Injectable } from "@nestjs/common"
 
 @Injectable()
 export class AptosService {
@@ -17,7 +17,8 @@ export class AptosService {
             message,
             signature: new Ed25519Signature(signature),
         })
-        if (!result) throw new BadRequestException("Signature verification failed.")
+        if (!result)
+            throw new Error("Signature verification failed.")
         return ed25519PublicKey.authKey().toString()
     }
 }

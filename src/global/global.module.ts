@@ -1,12 +1,10 @@
 import { Global, Module } from "@nestjs/common"
-import { AptosService, TokenService } from "./services"
-import { JwtService } from "@nestjs/jwt"
-import { JwtStrategy } from "./strategies"
+import { AptosService } from "./services"
 
 @Global()
 @Module({
     imports: [],
-    exports: [JwtStrategy, AptosService, TokenService],
-    providers: [JwtService, JwtStrategy, AptosService, TokenService],
+    exports: [AptosService],
+    providers: [AptosService],
 })
 export class GlobalModule {}

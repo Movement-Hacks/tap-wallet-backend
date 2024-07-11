@@ -1,8 +1,8 @@
 import { Injectable } from "@nestjs/common"
-import { SaveInput, SaveResponseData } from "./dtos"
+import { SaveMessage, SaveResponseData } from "./dtos"
 import { InjectRepository } from "@nestjs/typeorm"
 import { Repository } from "typeorm"
-import { GameEntity } from "@database"
+import { AccountEntity, GameEntity } from "@database"
 
 @Injectable()
 export class GameService {
@@ -11,20 +11,23 @@ export class GameService {
     private readonly gameRepository: Repository<GameEntity>,
     ) {}
 
-    public async save({ accountId, body }: SaveInput): Promise<SaveResponseData> {
-        const { balance, totalBonus } = body
-
-        let game = await this.gameRepository.findOne({
+    public async save(
+        { balance, totalBonus }: SaveMessage,
+        { accountId }: AccountEntity,
+    ): Promise<SaveResponseData> {
+        const game = await this.gameRepository.findOne({
             where: {
-                gameId: accountId,
+                accountId
             },
         })
-        if (!game) {
-            game = await this.gameRepository.save({
-                balance,
-                totalBonus,
-            })
-        }
+        const gameId = game ? game.gameId : undefined
+        
+        await this.gameRepository.save({
+            gameId,
+            balance,
+            totalBonus,
+            accountId
+        })
 
         return {
             message: "Save successfully.",

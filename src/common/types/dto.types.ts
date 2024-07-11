@@ -3,7 +3,8 @@ export interface BaseApiResponse<Data = undefined> {
     data?: Data
 }
 
-export interface BaseAuthInput<RequestBody> {
-    accountId: string
-    body: RequestBody
+export interface Signature<Message> {
+    message: Message
+    signature: string
+    publicKey: string
 }
