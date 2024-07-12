@@ -43,7 +43,7 @@ const bootstrap = async () => {
     })
 
     app.enableCors()
-
+ 
     app.useGlobalPipes(new ValidationPipe({transform: true}))
 
     // const x = { balance: 55, totalBonus: 66, timestamp: '2024-12-05T00:00:00' }

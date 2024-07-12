@@ -1,13 +1,13 @@
-import { Controller, Post, UseGuards, UseInterceptors } from "@nestjs/common"
+import { Body, Controller, Post, UseGuards, UseInterceptors } from "@nestjs/common"
 import {
     ApiBearerAuth,
     ApiBody,
     ApiCreatedResponse,
     ApiTags,
 } from "@nestjs/swagger"
-import { SavePayload, SaveRequestBody, SaveResponseData } from "./dtos"
+import { SaveRequestBody, SaveResponseData } from "./dtos"
 import { GameService } from "./game.service"
-import { PayloadFromBody, Account, AuthInterceptor, AuthGuard } from "../shared"
+import { Account, AuthInterceptor, AuthGuard } from "../shared"
 import { AccountEntity } from "@database"
 
 @ApiTags("Game")
@@ -27,7 +27,7 @@ export class GameController {
   @UseInterceptors(AuthInterceptor)
   @Post("save")
     async save(
-    @PayloadFromBody() payload: SavePayload,
+    @Body() { payload }: SaveRequestBody,
     @Account() account: AccountEntity,
     ) {
         return this.gameService.save(payload, account)

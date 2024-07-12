@@ -1,7 +1,7 @@
 import { Module } from "@nestjs/common"
 import { TypeOrmModule } from "@nestjs/typeorm"
 import { ConfigModule } from "@nestjs/config"
-import { appConfig, databaseConfig, jwtConfig, keysConfig } from "./config"
+import { appConfig, databaseConfig, jwtConfig, keysConfig, timestampConfig } from "./config"
 import { GlobalModule } from "@global"
 import { ControllersModule } from "controllers/controllers.module"
 import { ThrottlerModule } from "@nestjs/throttler"
@@ -13,7 +13,7 @@ import { ResolversModule } from "@resolvers"
 @Module({
     imports: [
         ConfigModule.forRoot({
-            load: [appConfig, keysConfig, databaseConfig, jwtConfig],
+            load: [appConfig, keysConfig, databaseConfig, jwtConfig, timestampConfig],
             isGlobal: true,
         }),
 

@@ -19,8 +19,12 @@ export class SavePayload {
 
   @ApiProperty({ default: new Date() })
   @Type(() => Date)
-  @IsDate()
+  @IsDate() 
       timestamp: Date
+    
+  constructor(partial: Partial<SavePayload>) {
+      Object.assign(this, partial)
+  }
 }
 
 export class SaveRequestBody implements Signature<SavePayload> {
