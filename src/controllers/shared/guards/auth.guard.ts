@@ -21,6 +21,8 @@ export class AuthGuard implements CanActivate {
             const { body } = request
             const { payload, signature, publicKey } = body
 
+            console.log(payload)
+            
             const address = this.aptosService.verifyMessage({
                 message: JSON.stringify(payload),
                 signature,

@@ -3,8 +3,12 @@ export interface BaseApiResponse<Data = undefined> {
     data?: Data
 }
 
-export interface Signature<Payload> {
-    payload: Payload
+export interface Signature<PayloadType extends Payload> {
+    payload: PayloadType
     signature: string
     publicKey: string
+}
+
+export interface Payload {
+    timestamp: Date
 }

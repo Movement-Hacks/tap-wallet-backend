@@ -9,6 +9,8 @@ import { promises as fsPromises } from "fs"
 import { GraphQLSchemaBuilderModule, GraphQLSchemaFactory } from "@nestjs/graphql"
 import { join } from "path"
 import { GameResolver } from "@resolvers"
+import { ValidationPipe } from "@nestjs/common"
+import { Account, Ed25519PrivateKey } from "@aptos-labs/ts-sdk"
 
 const generateSchema = async () => {
     const app = await NestFactory.create(GraphQLSchemaBuilderModule)
@@ -42,6 +44,13 @@ const bootstrap = async () => {
 
     app.enableCors()
 
+    app.useGlobalPipes(new ValidationPipe({transform: true}))
+
+    // const x = { balance: 55, totalBonus: 66, timestamp: '2024-12-05T00:00:00' }
+    // console.log(Account.fromPrivateKey({
+    //     privateKey: new Ed25519PrivateKey("0x6fca26e2f8f2205cfafe75af34bae9d786224f2cad56bb0f674fdb13d0d6972e")
+    // }).sign(JSON.stringify(x)).toString())
+    
     const config = new DocumentBuilder()
         .setVersion("1.0")
         .addBearerAuth()
