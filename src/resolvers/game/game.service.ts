@@ -18,6 +18,9 @@ export class GameService {
                     address,
                 },
             },
+            relations: {
+                account: true
+            }
         })
         if (!game) throw new NotFoundException("Game not found.")
 

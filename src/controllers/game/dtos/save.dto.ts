@@ -1,35 +1,30 @@
 import { ApiProperty } from "@nestjs/swagger"
 import {
-    IsDate,
+    IsDateString,
     IsHexadecimal,
     IsNumber,
     IsString,
 } from "class-validator"
 import { BaseApiResponse, Signature } from "@common"
-import { Type } from "class-transformer"
 
 export class SavePayload {
   @ApiProperty({ default: 69 })
   @IsNumber()
-      balance: number
+      balanceChange: number
 
   @ApiProperty({ default: 96 })
   @IsNumber()
-      totalBonus: number
+      bonusChange: number
 
-  @ApiProperty({ default: new Date() })
-  @Type(() => Date)
-  @IsDate() 
+  @ApiProperty({ default: new Date().toISOString() })
+  @IsDateString() 
       timestamp: Date
     
-  constructor(partial: Partial<SavePayload>) {
-      Object.assign(this, partial)
-  }
 }
 
-export class SaveRequestBody implements Signature<SavePayload> {
+export class SaveRequestBody implements Signature {
   @ApiProperty()
-      payload: SavePayload
+      payloadMessage: string
 
   @ApiProperty({
       default:

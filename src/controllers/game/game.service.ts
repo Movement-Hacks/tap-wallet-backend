@@ -13,7 +13,7 @@ export class GameService {
     ) {}
 
     public async save(
-        { balance, totalBonus, timestamp }: SavePayload,
+        { balanceChange, bonusChange, timestamp }: SavePayload,
         { accountId }: AccountEntity,
     ): Promise<SaveResponseData> {
         const game = await this.gameRepository.findOne({
@@ -30,10 +30,12 @@ export class GameService {
         }
 
         const gameId = game ? game.gameId : undefined
+        const { balance, totalBonus } = game
+        console.log()
         await this.gameRepository.save({
             gameId,
-            balance,
-            totalBonus,
+            balance: balance ? balanceChange : balance + balanceChange,
+            totalBonus: totalBonus ? bonusChange : totalBonus + bonusChange,
             accountId,
         })
 

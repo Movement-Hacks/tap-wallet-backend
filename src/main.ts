@@ -50,7 +50,7 @@ const bootstrap = async () => {
     // console.log(Account.fromPrivateKey({
     //     privateKey: new Ed25519PrivateKey("0x6fca26e2f8f2205cfafe75af34bae9d786224f2cad56bb0f674fdb13d0d6972e")
     // }).sign(JSON.stringify(x)).toString())
-    
+
     const config = new DocumentBuilder()
         .setVersion("1.0")
         .addBearerAuth()
