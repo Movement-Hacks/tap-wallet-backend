@@ -9,7 +9,7 @@ on:
 jobs:
   docker-compose:
     runs-on: self-hosted
-    environment: docker
+    environment: Docker
     steps:
     - name: Checkout code
       uses: actions/checkout@v2 
