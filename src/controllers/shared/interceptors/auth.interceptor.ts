@@ -1,3 +1,4 @@
+import { convertISODatesToObject } from "@common"
 import { AccountEntity } from "@database"
 import {
     Injectable,
@@ -21,7 +22,7 @@ export class AuthInterceptor implements NestInterceptor {
         next: CallHandler,
     ): Promise<Observable<unknown>> {
         const request = context.switchToHttp().getRequest()
-        const { address } = request
+        const { address, body } = request
 
         let account = await this.accountRepository.findOne({
             where: {
@@ -34,6 +35,7 @@ export class AuthInterceptor implements NestInterceptor {
             })
         }
         request.account = account
+        request.payload = convertISODatesToObject(JSON.parse(body.payloadMessage)) 
 
         return next.handle()
     }
