@@ -1,0 +1,31 @@
+
+name: Compose Docker local project
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  docker-compose:
+    runs-on: self-hosted
+    environment: docker
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2 
+ 
+    - name: Run Docker compose command
+      env:
+        POSTGRES_USERNAME: ${{ secrets.POSTGRES_USERNAME }}
+        POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+        POSTGRES_SCHEMA: ${{ secrets.POSTGRES_SCHEMA }}
+        POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
+        POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
+        JWT_SECRET: ${{ secrets.JWT_SECRET }}
+        ACCESS_TOKEN_EXPIRY_TIME: ${{ secrets.ACCESS_TOKEN_EXPIRY_TIME }}
+        SSL_CERT:  ${{ secrets.SSL_CERT }}
+        SSL_KEY:  ${{ secrets.SSL_KEY }}
+        PORT:  ${{ vars.PORT }}
+        NODE_ENV:  ${{ vars.NODE_ENV }}
+      run: docker compose -f docker/github-compose.yaml -p ci-wallet-backend up --build -d 
+ 
