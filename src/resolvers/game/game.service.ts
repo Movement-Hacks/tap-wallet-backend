@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from "@nestjs/common"
+import { Injectable } from "@nestjs/common"
 import { LoadInput, LoadResponseSchema } from "./dtos"
 import { InjectRepository } from "@nestjs/typeorm"
 import { Repository } from "typeorm"
@@ -22,7 +22,12 @@ export class GameService {
                 account: true
             }
         })
-        if (!game) throw new NotFoundException("Game not found.")
+        if (!game) return {
+            game: {
+                balance: 0,
+                totalBonus: 0
+            }
+        }
 
         return {
             game

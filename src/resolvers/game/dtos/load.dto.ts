@@ -1,6 +1,7 @@
 import { IsHexadecimal } from "class-validator"
 import { Field, InputType, ObjectType } from "@nestjs/graphql"
 import { GameEntity } from "@database"
+import { DeepPartial } from "typeorm"
 
 @InputType()
 export class LoadInput {
@@ -12,5 +13,5 @@ export class LoadInput {
 @ObjectType()
 export class LoadResponseSchema {
   @Field(() => GameEntity)
-      game: GameEntity
+      game: DeepPartial<GameEntity>
 }

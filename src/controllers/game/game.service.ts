@@ -30,12 +30,12 @@ export class GameService {
         }
 
         const gameId = game ? game.gameId : undefined
-        const { balance, totalBonus } = game
-        console.log()
+        const { balance, totalBonus } = { ...game }
+
         await this.gameRepository.save({
             gameId,
-            balance: balance ? balanceChange : balance + balanceChange,
-            totalBonus: totalBonus ? bonusChange : totalBonus + bonusChange,
+            balance: balance ? balance + balanceChange : balanceChange,
+            totalBonus: totalBonus ? totalBonus + bonusChange : bonusChange,
             accountId,
         })
 
