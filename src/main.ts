@@ -38,6 +38,8 @@ const bootstrap = async () => {
         },
     })
 
+    console.log(keysConfig().ssl.cert)
+
     const app = await NestFactory.create(AppModule, {
         httpsOptions,
     })
