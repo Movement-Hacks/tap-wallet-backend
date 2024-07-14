@@ -27,5 +27,5 @@ jobs:
         SSL_KEY:  ${{ secrets.SSL_KEY }}
         PORT:  ${{ vars.PORT }}
         NODE_ENV:  ${{ vars.NODE_ENV }}
-      run: docker compose -f docker/github-compose.yaml -p ci-wallet-backend up --build -d 
+      run: docker compose -f docker/github-docker-compose.yaml -p ci-wallet-backend up --build -d 
  
