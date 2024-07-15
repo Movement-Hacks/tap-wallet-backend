@@ -2,6 +2,7 @@ import { ApiProperty } from "@nestjs/swagger"
 import {
     IsDateString,
     IsHexadecimal,
+    IsInt,
     IsNumber,
     IsString,
 } from "class-validator"
@@ -12,14 +13,21 @@ export class SavePayload {
   @IsNumber()
       balanceChange: number
 
-  @ApiProperty({ default: 96 })
+  @ApiProperty({ default: 1 })
+  @IsInt()
+      levelChange: number
+
+  @ApiProperty({ default: 69.96 })
   @IsNumber()
-      bonusChange: number
+      progressChange: number
+
+  @ApiProperty({ default: 1 })
+  @IsInt()
+      autoTapperLevelChange: number
 
   @ApiProperty({ default: new Date().toISOString() })
-  @IsDateString() 
+  @IsDateString()
       timestamp: Date
-    
 }
 
 export class SaveRequestBody implements Signature {

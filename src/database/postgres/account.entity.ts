@@ -2,12 +2,10 @@ import {
     Column,
     CreateDateColumn,
     Entity,
-    OneToOne,
     PrimaryGeneratedColumn,
     UpdateDateColumn,
 } from "typeorm"
-import { GameEntity } from "./game.entity"
-import { Field, ID, ObjectType } from "@nestjs/graphql"
+import { Field, Float, ID, Int, ObjectType } from "@nestjs/graphql"
 
 @ObjectType()
 @Entity("account")
@@ -20,9 +18,21 @@ export class AccountEntity {
   @Column({ type: "varchar", length: 66, unique: true })
       address: string
 
-  @Field(() => GameEntity)
-  @OneToOne(() => GameEntity, (game) => game.account)
-      game: GameEntity
+  @Field(() => Int)
+  @Column({ type: "int", default: 0 })
+      balance: number
+
+  @Field(() => Int)
+  @Column({ type: "int", default: 1 })
+      level: number
+
+  @Field(() => Float)
+  @Column({ type: "float", default: 0 })
+      progress: number
+
+  @Field(() => Float)
+  @Column({ type: "float", default: 1 })
+      autoTapperLevel: number
 
   @Field(() => Date)
   @CreateDateColumn()

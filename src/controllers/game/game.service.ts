@@ -2,26 +2,20 @@ import { BadRequestException, Injectable } from "@nestjs/common"
 import { SavePayload, SaveResponseData } from "./dtos"
 import { InjectRepository } from "@nestjs/typeorm"
 import { Repository } from "typeorm"
-import { AccountEntity, GameEntity } from "@database"
+import { AccountEntity } from "@database"
 import { timestampConfig } from "@config"
 
 @Injectable()
 export class GameService {
     constructor(
-    @InjectRepository(GameEntity)
-    private readonly gameRepository: Repository<GameEntity>,
+    @InjectRepository(AccountEntity)
+    private readonly accountRepository: Repository<AccountEntity>,
     ) {}
 
     public async save(
-        { balanceChange, bonusChange, timestamp }: SavePayload,
-        { accountId }: AccountEntity,
+        { balanceChange, autoTapperLevelChange, levelChange, progressChange, timestamp }: SavePayload,
+        { accountId, balance, progress, level, autoTapperLevel }: AccountEntity,
     ): Promise<SaveResponseData> {
-        const game = await this.gameRepository.findOne({
-            where: {
-                accountId,
-            },
-        })
-
         if (
             new Date().getMilliseconds() - timestamp.getMilliseconds() >
       timestampConfig().deadline
@@ -29,14 +23,11 @@ export class GameService {
             throw new BadRequestException("Request has expired. Please try again.")
         }
 
-        const gameId = game ? game.gameId : undefined
-        const { balance, totalBonus } = game
-        console.log()
-        await this.gameRepository.save({
-            gameId,
-            balance: balance ? balanceChange : balance + balanceChange,
-            totalBonus: totalBonus ? bonusChange : totalBonus + bonusChange,
-            accountId,
+        await this.accountRepository.update(accountId, {
+            balance: balance + balanceChange,
+            autoTapperLevel: autoTapperLevel + autoTapperLevelChange,
+            progress: progress + progressChange,
+            level: level + levelChange
         })
 
         return {

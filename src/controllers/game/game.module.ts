@@ -1,11 +1,11 @@
 import { Module } from "@nestjs/common"
 import { TypeOrmModule } from "@nestjs/typeorm"
-import { AccountEntity, GameEntity } from "@database"
+import { AccountEntity } from "@database"
 import { GameService } from "./game.service"
 import { GameController } from "./game.controller"
 
 @Module({
-    imports: [TypeOrmModule.forFeature([AccountEntity, GameEntity])],
+    imports: [TypeOrmModule.forFeature([AccountEntity])],
     controllers: [GameController],
     providers: [GameService],
 })

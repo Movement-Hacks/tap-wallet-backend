@@ -1,9 +1,10 @@
-type GameEntity {
-  gameId: ID!
-  balance: Int!
-  totalBonus: Float!
+type AccountEntity {
   accountId: ID!
-  account: AccountEntity!
+  address: String!
+  balance: Int!
+  level: Int!
+  progress: Float!
+  autoTapperLevel: Float!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -13,16 +14,8 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
-type AccountEntity {
-  accountId: ID!
-  address: String!
-  game: GameEntity!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-}
-
 type LoadResponseSchema {
-  game: GameEntity!
+  account: AccountEntity!
 }
 
 type Query {
